@@ -1,0 +1,118 @@
+{% extends 'home/base.html' %}
+
+{% load static %}
+
+{% block content %}
+        
+      
+        <!-- Service Start -->
+        <div class="service">
+            <div class="container">
+                <div class="section-header text-center">
+                    <p>CATEGORIES</p>
+                    <h3>We sell all kind of cars at affordable prices</h3>
+                </div>
+                
+            </div>
+        </div>
+       
+        <!-- About Start -->
+        <div class="about">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <a class="navbar-brand" href="{% url 'product:product_list' %}"> <h3>Categories</h3></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                      <div class="navbar-nav">
+                        {% for category in categories %}
+                            <a class="nav-item nav-link active" href="{% url 'product:category' %}"category.pk>"><li><i class="far fa-check-circle"></i>{{category.name}} <span class="sr-only">(current)</span></a>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </nav>
+
+                          
+                       
+        </div>
+        <!-- About End -->
+        <!-- Blog Start -->
+        <div class="blog">
+            <div class="container">
+                <div class="row">
+                    {% for list in category_posts  %}
+                    <div class="col-lg-4">
+                        <div class="blog-item">
+                            <div class="blog-img">
+                                <img src="{{list.image.url}}" alt="Image" style="width: 350px; height:200px">
+                                <div class="meta-date">
+                                    
+                                   <strong> <a href="" style="color: aliceblue;"> <i class="fas fa-shopping-cart"></i> <i class="fa fa-plus" aria-hidden="true"></i> </a> </strong> 
+                                   
+                                    
+                                </div>
+                            </div>
+                            <div class="blog-text">
+                                <h3><a href="#">{{list.name}}</a></h3>
+                                <h3><a href="#">{{list.category}}</a></h3>
+                                <p>
+                                   {{list.description}}
+                                </p>
+                                <div class=""> <del>${{list.price}}</del> &nbsp; &nbsp; &nbsp; ${{list.discount_price}}</div>
+                            </div>
+                            <div class="blog-meta">
+                                <p><i class="fa fa-user"></i><a href="">Admin</a></p>
+                                <p><i class="fa fa-folder"></i><a href="">{{list.date_created| date:"M d, Y" }}</a></p>
+                                <a href=""> <p><i class="fas fa-shopping-cart"></i> Add to Cart</p> </a>
+                            </div>
+                        </div>
+                    </div>
+                   {% endfor %}
+                   
+                </div>
+
+                <div class="col text-center">
+                    <div class="block-27">
+                        {% comment %} <a class="btn" href=""><i class="fab fa-twitter"></i></a> {% endcomment %}
+                        
+                            
+                            
+                                    <br>
+                                    {% if category_posts.has_previous %}
+                                    <a style="background: rgb(241, 54, 54); border-radius: 50%;" class="btn btn-primary" href="?page={{category_posts.previous_page_number}}">&lt;</a>
+                                    {% else %}
+                                        <a style="background: rgb(241, 54, 54); border-radius: 50%;" class="btn btn-primary" href="">&lt;</a>
+                                    {% endif %}
+
+                                    {% for i in category_posts.paginator.page_range %}
+                                    {% if category_posts.number == i %}
+                                        <a style="background: rgb(241, 54, 54); border-radius: 50%;" class="btn btn-primary"><span>{{ i }} <span class="sr-only">(current)</span></span></a>
+                                    {% else %}
+                                        <a style="background: rgb(241, 54, 54); border-radius: 50%;" class="btn btn-primary" href="?page={{ i }}">{{ i }}</a>
+                                    {% endif %}
+                                    {% endfor %}
+
+                                    {% if category_posts.has_next %}
+                                        <a style="background: rgb(241, 54, 54); border-radius: 50%;" class="btn btn-primary" href="?page={{category_posts.next_page_number}}">&gt;</a>
+                                    {% else %}
+                                        <a style="background: rgb(241, 54, 54); border-radius: 50%;" class="btn btn-primary" href="">&gt;</a>
+                                    {% endif %}
+                            
+                        
+                    </div>
+                </div>
+
+
+                
+            </div>
+        </div>
+        <!-- Blog End -->
+
+
+
+{% endblock content %}
+
+
+
+

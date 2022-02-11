@@ -1,0 +1,166 @@
+{% extends 'home/base.html' %}
+
+{% load static %}
+
+{% block content %}
+        <!-- Carousel Start -->
+        <div class="carousel">
+            <div class="container-fluid">
+                <div class="owl-carousel">
+                    <div class="carousel-item">
+                        <div class="carousel-img">
+                            <img src="{% static 'img/car1.jpg' %}" alt="Image" style="height:120vh;">
+                        </div>
+                        <div class="carousel-text">
+                            <h3>Washing & Detailing</h3>
+                            <h1>Keep your Car Newer</h1>
+                            <p>
+                                Lorem ipsum dolor sit amet elit. Phasellus ut mollis mauris. Vivamus egestas eleifend dui ac
+                            </p>
+                            <a class="btn btn-custom" href="">Explore More</a>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="carousel-img">
+                            <img src="{% static 'img/car2.jpg' %}" alt="Image" style="height:120vh;">
+                        </div>
+                        <div class="carousel-text">
+                            <h3>Washing & Detailing</h3>
+                            <h1>Quality service for you</h1>
+                            <p>
+                                Morbi sagittis turpis id suscipit feugiat. Suspendisse eu augue urna. Morbi sagittis orci sodales
+                            </p>
+                            <a class="btn btn-custom" href="">Explore More</a>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="carousel-img">
+                            <img src="{% static 'img/car3.png' %}" alt="Image" style="height:120vh;">
+                        </div>
+                        <div class="carousel-text">
+                            <h3>Washing & Detailing</h3>
+                            <h1>Exterior & Interior Washing</h1>
+                            <p>
+                                Sed ultrices, est eget feugiat accumsan, dui nibh egestas tortor, ut rhoncus nibh ligula euismod quam
+                            </p>
+                            <a class="btn btn-custom" href="">Explore More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Carousel End -->
+        
+        <!-- Service Start -->
+        <div class="service">
+            <div class="container">
+                <div class="section-header text-center">
+                    <p>What We Do?</p>
+                    <h3>We sell all kind of cars at affordable prices</h3>
+                </div>
+                
+            </div>
+        </div>
+       
+        <!-- About Start -->
+        <div class="about">
+            <div class="container">
+          
+                             
+                                    {% comment %} <li><i class="far fa-check-circle"></i><a href="{{cat.get_absolute_url}}?category={{category.name}}">{{ category.name}}</a> <span>({{category.posts_count}})</span></a></li> {% endcomment %}
+                                    {% comment %} <li><i class="far fa-check-circle"></i> <a href="">{{category.name}}</a> {% endcomment %}
+                                        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                                            <a class="navbar-brand" href="{% url 'product:product_list' %}"> <h3>Categories</h3></a>
+                                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                                              <span class="navbar-toggler-icon"></span>
+                                            </button>
+                                            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                                              <div class="navbar-nav">
+                                                {% for category in categories %}
+                                                    <a class="nav-item nav-link active" href="{{products.category.get_absolute_url}}"><li><i class="far fa-check-circle"></i>{{category.name}} ({{category.posts_count}}) <span class="sr-only">(current)</span></a>
+                                                {% endfor %}
+                                              </div>
+                                            </div>
+                                          </nav>
+        </div>
+        
+        <!-- About End -->
+        <!-- Blog Start -->
+        <div class="blog">
+            <div class="container">
+                <div class="row">
+                    {% for list in p_pages  %}
+                    <div class="col-lg-4">
+                        <div class="blog-item">
+                            <div class="blog-img">
+                                <img src="{{list.image.url}}" alt="Image" style="width: 350px; height:200px">
+                                <div class="meta-date">
+                                    
+                                   <strong> <a href="" style="color: aliceblue;"> <i class="fas fa-shopping-cart"></i> <i class="fa fa-plus" aria-hidden="true"></i> </a> </strong> 
+                                   
+                                    
+                                </div>
+                            </div>
+                            <div class="blog-text">
+                                <h3><a href="#">{{list.name}}</a></h3>
+                                <a class="" href="{{list.category.get_absolute_url}}">{{list.category.id}}</a>
+                                <p>
+                                   {{list.description}}
+                                </p>
+                                <div class=""> <del>${{list.price}}</del> &nbsp; &nbsp; &nbsp; ${{list.discount_price}}</div>
+                            </div>
+                            <div class="blog-meta">
+                                <p><i class="fa fa-user"></i><a href="">Admin</a></p>
+                                <p><i class="fa fa-folder"></i><a href="">{{list.date_created| date:"M d, Y" }}</a></p>
+                                <a href=""> <p><i class="fas fa-shopping-cart"></i> Add to Cart</p> </a>
+                            </div>
+                        </div>
+                    </div>
+                   {% endfor %}
+                   
+                </div>
+
+                <div class="col text-center">
+                    <div class="block-27">
+                        {% comment %} <a class="btn" href=""><i class="fab fa-twitter"></i></a> {% endcomment %}
+                        
+                            
+                            
+                                    <br>
+                                    {% if p_pages.has_previous %}
+                                    <a style="background: rgb(241, 54, 54); border-radius: 50%;" class="btn btn-primary" href="?page={{p_pages.previous_page_number}}">&lt;</a>
+                                    {% else %}
+                                        <a style="background: rgb(241, 54, 54); border-radius: 50%;" class="btn btn-primary" href="">&lt;</a>
+                                    {% endif %}
+
+                                    {% for i in p_pages.paginator.page_range %}
+                                    {% if p_pages.number == i %}
+                                        <a style="background: rgb(241, 54, 54); border-radius: 50%;" class="btn btn-primary"><span>{{ i }} <span class="sr-only">(current)</span></span></a>
+                                    {% else %}
+                                        <a style="background: rgb(241, 54, 54); border-radius: 50%;" class="btn btn-primary" href="?page={{ i }}">{{ i }}</a>
+                                    {% endif %}
+                                    {% endfor %}
+
+                                    {% if p_pages.has_next %}
+                                        <a style="background: rgb(241, 54, 54); border-radius: 50%;" class="btn btn-primary" href="?page={{p_pages.next_page_number}}">&gt;</a>
+                                    {% else %}
+                                        <a style="background: rgb(241, 54, 54); border-radius: 50%;" class="btn btn-primary" href="">&gt;</a>
+                                    {% endif %}
+                            
+                        
+                    </div>
+                </div>
+
+
+                
+            </div>
+        </div>
+        <!-- Blog End -->
+
+
+
+{% endblock content %}
+
+
+
+
