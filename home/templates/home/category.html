@@ -20,14 +20,14 @@
         <div class="about">
             <div class="container">
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <a class="navbar-brand" href="{% url 'product:product_list' %}"> <h3>Categories</h3></a>
+                    <a class="navbar-brand" href="{% url 'product:product_list' %}"> <h3>Categories of {{categories.cat}}</h3></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                       <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                       <div class="navbar-nav">
                         {% for category in categories %}
-                            <a class="nav-item nav-link active" href="{% url 'product:category' %}"category.pk>"><li><i class="far fa-check-circle"></i>{{category.name}} <span class="sr-only">(current)</span></a>
+                            <a class="nav-item nav-link active" href=""><li><i class="far fa-check-circle"></i>{{category.name}} <span class="sr-only">(current)</span></a>
                         {% endfor %}
                       </div>
                     </div>
@@ -41,32 +41,34 @@
         <div class="blog">
             <div class="container">
                 <div class="row">
-                    {% for list in category_posts  %}
+                    {% for list in categories.posts  %}
                     <div class="col-lg-4">
-                        <div class="blog-item">
-                            <div class="blog-img">
-                                <img src="{{list.image.url}}" alt="Image" style="width: 350px; height:200px">
-                                <div class="meta-date">
+                        <a href="{{list.get_absolute_url}}">
+                            <div class="blog-item">
+                                <div class="blog-img">
+                                    <img src="{{list.image.url}}" alt="Image" style="width: 350px; height:200px">
+                                    <div class="meta-date">
+                                        
+                                    <strong> <a href="" style="color: aliceblue;"> <i class="fas fa-shopping-cart"></i> <i class="fa fa-plus" aria-hidden="true"></i> </a> </strong> 
                                     
-                                   <strong> <a href="" style="color: aliceblue;"> <i class="fas fa-shopping-cart"></i> <i class="fa fa-plus" aria-hidden="true"></i> </a> </strong> 
-                                   
-                                    
+                                        
+                                    </div>
+                                </div>
+                                <div class="blog-text">
+                                    <h3><a href="#">{{list.name}}</a></h3>
+                                    <h3><a href="#">{{list.category}}</a></h3>
+                                    <p>
+                                    {{list.description}}
+                                    </p>
+                                    <div class=""> <del>${{list.price}}</del> &nbsp; &nbsp; &nbsp; ${{list.discount_price}}</div>
+                                </div>
+                                <div class="blog-meta">
+                                    <p><i class="fa fa-user"></i><a href="">Admin</a></p>
+                                    <p><i class="fa fa-folder"></i><a href="">{{list.date_created| date:"M d, Y" }}</a></p>
+                                    <a href=""> <p><i class="fas fa-shopping-cart"></i> Add to Cart</p> </a>
                                 </div>
                             </div>
-                            <div class="blog-text">
-                                <h3><a href="#">{{list.name}}</a></h3>
-                                <h3><a href="#">{{list.category}}</a></h3>
-                                <p>
-                                   {{list.description}}
-                                </p>
-                                <div class=""> <del>${{list.price}}</del> &nbsp; &nbsp; &nbsp; ${{list.discount_price}}</div>
-                            </div>
-                            <div class="blog-meta">
-                                <p><i class="fa fa-user"></i><a href="">Admin</a></p>
-                                <p><i class="fa fa-folder"></i><a href="">{{list.date_created| date:"M d, Y" }}</a></p>
-                                <a href=""> <p><i class="fas fa-shopping-cart"></i> Add to Cart</p> </a>
-                            </div>
-                        </div>
+                        </a>
                     </div>
                    {% endfor %}
                    
@@ -77,7 +79,7 @@
                         {% comment %} <a class="btn" href=""><i class="fab fa-twitter"></i></a> {% endcomment %}
                         
                             
-                            
+{% comment %}                             
                                     <br>
                                     {% if category_posts.has_previous %}
                                     <a style="background: rgb(241, 54, 54); border-radius: 50%;" class="btn btn-primary" href="?page={{category_posts.previous_page_number}}">&lt;</a>
@@ -98,7 +100,7 @@
                                     {% else %}
                                         <a style="background: rgb(241, 54, 54); border-radius: 50%;" class="btn btn-primary" href="">&gt;</a>
                                     {% endif %}
-                            
+                             {% endcomment %}
                         
                     </div>
                 </div>

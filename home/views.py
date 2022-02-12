@@ -1,14 +1,16 @@
+from multiprocessing import context
 from django.http import request
 # from django.contrib.auth import authenticate, login, logout
 # from django.contrib.auth import login, logout
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from django.views.generic import CreateView
+from django.views.generic import ListView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # from home.EmailBackEnd import EmailBackEnd
 from django.contrib import messages
 from django.db.models import Count
+
 
 from .models import Product, Category
 from .forms import ProductCreateForm, CategoryCreateForm
@@ -81,21 +83,32 @@ def category_post(request):
  
  
  # this is where the error is coming from
-def category_list(request, id):
-    categories = Category.objects.all()
+# def category_list(request, id):
+#     categories = Category.objects.get(id=id)
     
-    products = Product.objects.filter()
+#     products = categories.category.all()
+#     print(products)
     
-    if category_slug:
-       category =get_object_or_404(Category, i)
-       products = products.filter(category=category)    
+#     if id:
+#        category =get_object_or_404(Category, id)
+#        products = products.filter(category=category)    
     
-    context = {
-        'categories':categories,
-         'products':products,
-        'category':category
+#     context = {
+#         'categories':categories,
+#          'products':products,
+#         'category':category
       
         
-    }
-    return render(request, 'home/category.html', context)
+#     }
+#     return render(request, 'home/category.html', context)
     
+class CategoryListView(ListView):
+    template_name = 'home/category.html'
+    context_object_name = 'categories'
+    
+    def get_queryset(self) :
+        content = {
+            'cat':self.kwargs['category'],
+            'posts':Product.objects.filter(category__name=self.kwargs['category']).filter(description='published')
+        }
+        return content

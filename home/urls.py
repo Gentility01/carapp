@@ -8,7 +8,8 @@ from .views import (
     product_detail,
     create_post,
     category_post,
-    category_list
+    CategoryListView,
+    # category_list
     # login_page,
     # doLogin,
     # GetUserDetail,
@@ -32,7 +33,8 @@ urlpatterns = [
     path('category_post/', category_post, name='category_post'),
     path('product_list/<slug:category_slug>/', product_list, name='product_list_category'),
     path('product_detail/<int:id>/', product_detail, name='product_detail'),
-    path('category/<int>/', category_list, name='category'),
+    # path('category/<int>/', category_list, name='category'),
+    path('category/<category>/', CategoryListView.as_view(), name='category'),
     
 ]
 
